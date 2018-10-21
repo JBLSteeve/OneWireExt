@@ -1,0 +1,10 @@
+{
+	"id" : "OneWireExt",
+	"name" : "OneWireExt",
+	"description" : "Plugin permettant la gestion des capteurs de température 1W sur le BUS 1W d'un Raspberry ou Odroid (compatible avec la carte GPIOExt)",
+	"licence" : "AGPL",
+	"author" : "JBLSteeve",
+	"require" : "3.0",
+	"category" : "automation protocol",
+	"hasOwnDeamon" : true
+}
