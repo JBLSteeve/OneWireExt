@@ -84,6 +84,7 @@ def read_1wBus(_base_dir):
 		if i==3:
 			logging.debug("Error for the sensor @" + device[23:])
 			write_socket(device[23:],"-55")
+	globals.JEEDOM_COM.send_changes_async()
 			
 # ----------------------------------------------------------------------------	
 def read_temp_raw(device_file):
