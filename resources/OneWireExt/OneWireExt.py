@@ -75,24 +75,25 @@ def read_1wBus(_base_dir):
 					temp_c = float(temp_string) / 1000.0
 					#temp_f = temp_c * 9.0 / 5.0 + 32.0
 					if temp_c!=85:
-						write_socket(device[23:],temp_c)
-						logging.debug("Send for the sensor @" + device[23:] + " the temperature =" + str(temp_c))
+						write_socket(device[23:],round_of_rating(temp_c))
+						logging.debug("Send for the sensor @" + device[23:] + " the temperature =" + str(round_of_rating(temp_c)))
 						break
 			else:
 				time.sleep(0.2)
 				i=i+1
 		if i==3:
 			logging.debug("Error for the sensor @" + device[23:])
-			write_socket(device[23:],"-55")
-	globals.JEEDOM_COM.send_changes_async()
-			
+			#write_socket(device[23:],"-55")
 # ----------------------------------------------------------------------------	
 def read_temp_raw(device_file):
 	f = open(device_file, 'r')
 	lines = f.readlines()
 	f.close()
 	return lines
-	
+# ----------------------------------------------------------------------------	
+def round_of_rating(number):
+	return round((number * 2) / 2)
+        	
 # ----------------------------------------------------------------------------	
 def main(_cycle,_base_dir):
 	logging.debug("Start deamon")
@@ -179,7 +180,7 @@ signal.signal(signal.SIGTERM, handler)
 
 try:
 	jeedom_utils.write_pid(str(_pidfile))
-	globals.JEEDOM_COM = jeedom_com(apikey = _apikey,url = _callback,cycle=_cycle)
+	globals.JEEDOM_COM = jeedom_com(apikey = _apikey,url = _callback,cycle=0)
 	print('api ',_apikey)
 	if not globals.JEEDOM_COM.test():
 		logging.error('Network communication issues. Please fixe your Jeedom network configuration.')
