@@ -75,8 +75,8 @@ def read_1wBus(_base_dir):
 					temp_c = float(temp_string) / 1000.0
 					#temp_f = temp_c * 9.0 / 5.0 + 32.0
 					if temp_c!=85:
-						write_socket(device[23:],round_of_rating(temp_c))
-						logging.debug("Send for the sensor @" + device[23:] + " the temperature =" + str(round_of_rating(temp_c)))
+						write_socket(device[23:],round(temp_c,1))
+						logging.debug("Send for the sensor @" + device[23:] + " the temperature =" + str(round(temp_c,1)))
 						break
 			else:
 				time.sleep(0.2)
@@ -90,10 +90,6 @@ def read_temp_raw(device_file):
 	lines = f.readlines()
 	f.close()
 	return lines
-# ----------------------------------------------------------------------------	
-def round_of_rating(number):
-	return round((number * 2) / 2)
-        	
 # ----------------------------------------------------------------------------	
 def main(_cycle,_base_dir):
 	logging.debug("Start deamon")
