@@ -31,16 +31,14 @@ from optparse import OptionParser
 from os.path import join
 import json
 import glob
-
-os.system('modprobe w1-gpio')
-os.system('modprobe w1-therm')
-
 try:
 	from jeedom.jeedom import *
 except ImportError:
-	print ("Error: importing module jeedom.jeedom")
+	print "Error: importing module from jeedom folder"
 	sys.exit(1)
 
+os.system('modprobe w1-gpio')
+os.system('modprobe w1-therm')
 # ----------------------------------------------------------------------------
 def write_socket(address,value):	#type=input or output or status
 	logging.debug("Send update for the board @:" + str(address))
