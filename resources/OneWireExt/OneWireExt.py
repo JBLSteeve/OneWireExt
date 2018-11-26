@@ -80,8 +80,34 @@ def read_1wBus(_base_dir):
 				time.sleep(0.2)
 				i=i+1
 		if i==3:
-			logging.debug("Error for the sensor @" + device[23:])
-			#write_socket(device[23:],"-55")
+			logging.error("Error for the sensor @" + device[23:])
+	device_folder = glob.glob(_base_dir + '28*')
+	for device in device_folder:
+		#logging.debug("lecture du capteur:" + device)
+		device_file = device + '/w1_slave'
+		f = open(device_file, 'r')
+		lines = f.readlines()
+		f.close()
+		#logging.debug("donnees du capteur:")
+		#logging.debug(lines[0])
+		#logging.debug(lines[1])
+		i=0
+		while i<3:
+			if lines[0].strip()[-3:] == 'YES':
+				equals_pos = lines[1].find('t=')
+				if equals_pos != -1:
+					temp_string = lines[1][equals_pos+2:]
+					temp_c = float(temp_string) / 1000.0
+					#temp_f = temp_c * 9.0 / 5.0 + 32.0
+					if temp_c!=85:
+						write_socket(device[23:],round(temp_c,1))
+						logging.debug("Send for the sensor @" + device[23:] + " the temperature =" + str(round(temp_c,1)))
+						break
+			else:
+				time.sleep(0.2)
+				i=i+1
+		if i==3:
+			logging.error("Error for the sensor @" + device[23:])			
 # ----------------------------------------------------------------------------	
 def read_temp_raw(device_file):
 	f = open(device_file, 'r')
