@@ -29,7 +29,7 @@ class OneWireExt extends eqLogic {
 			$OneWireExt = OneWireExt::byLogicalId($_address, 'OneWireExt');
 			if ( ! is_object($OneWireExt)) {
 			$OneWireExt = new OneWireExt();
-			$OneWireExt->setName('Sonde');
+			$OneWireExt->setName('Sonde - ' . $_address);
 			$OneWireExt->setLogicalId($_address);
             $OneWireExt->setEqType_name('OneWireExt');
             $OneWireExt->setIsEnable(1);
